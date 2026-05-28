@@ -2,58 +2,59 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>조민수</title>
+    <title>민수야, 안녕</title>
     <style>
-        body { font-family: 'Noto Sans KR', sans-serif; background-color: #fff0f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
-        .card { background: white; padding: 40px; border-radius: 30px; box-shadow: 0 10px 30px rgba(255,182,193,0.3); max-width: 800px; width: 100%; display: flex; align-items: center; gap: 40px; }
-        
-        /* 왼쪽 편지 영역 */
-        .content { flex: 1; text-align: left; }
-        h1 { color: #db2777; margin-bottom: 20px; }
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #fff0f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .card { background: white; padding: 50px; border-radius: 40px; box-shadow: 0 10px 30px rgba(255,182,193,0.5); width: 700px; text-align: center; }
         .page { display: none; }
-        .page.active { display: block; }
+        .page.active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         
-        /* 오른쪽 사진 영역 */
-        .photo-side { flex: 1; text-align: center; }
-        .photo { width: 100%; border-radius: 20px; border: 5px solid #ffdde1; }
+        h1 { color: #db2777; font-size: 2.5em; margin-bottom: 20px; }
+        p { font-size: 1.2em; line-height: 1.8; color: #444; }
+        .photo { width: 300px; border-radius: 20px; border: 5px solid #ffdde1; margin: 20px 0; }
         
-        button { background: #db2777; color: white; border: none; padding: 12px 25px; border-radius: 50px; font-weight: bold; cursor: pointer; margin-top: 20px; }
-        .btn-link { display: inline-block; background-color: #db2777; color: white; padding: 15px 30px; border-radius: 50px; text-decoration: none; font-weight: bold; margin-top: 10px; }
+        .btn-group { margin-top: 30px; }
+        button { background: #db2777; color: white; border: none; padding: 12px 25px; border-radius: 50px; font-weight: bold; cursor: pointer; margin: 0 10px; }
+        .btn-link { display: inline-block; background-color: #db2777; color: white; padding: 15px 30px; border-radius: 50px; text-decoration: none; font-weight: bold; margin-top: 20px; }
     </style>
 </head>
 <body>
 
     <div class="card">
-        <div class="photo-side">
-            <img src="IMG_8799.jpeg" alt="우리 아기집" class="photo">
+        <!-- 1페이지: 민수야 -->
+        <div id="page1" class="page active">
+            <h1>민수야,</h1>
+            <button onclick="changePage(2)">다음 ➔</button>
         </div>
 
-        <div class="content">
-            <div id="page1" class="page active">
-                <h1>민수</h1>
-                <p>민수야, 우리처음만날때 생각나? 너 완젼 백수같았는데</p> 
-                <p>만난지는 얼마 되지도 안됬는데 아기도 생기고 결혼할라하니까 기분이 싱숭맹숭하네</p> 
-                <p>나너 맨날 바보같이 놀려도 사랑하니까 우리 세상이 이쁘게 키워보자</p> 
-                <p>사랑해, 조민수</p>
-                <button onclick="nextPage(2)">다음 내용 보기 ➔</button>
+        <!-- 2페이지: 편지 -->
+        <div id="page2" class="page">
+            <h1>민수</h1></h1>
+            <p>민수야, 우리처음만날때 생각나? 너 완젼 백수같았는데</p> 
+            <p>만난지는 얼마 되지도 안됬는데 아기도 생기고 결혼할라하니까 기분이 싱숭맹숭하네</p> 
+            <p>나너 맨날 바보같이 놀려도 사랑하니까 우리 세상이 이쁘게 키워보자</p> 
+            <p>사랑해, 조민수</p>
+            <div class="btn-group">
+                <button onclick="changePage(1)">⭠ 이전</button>
+                <button onclick="changePage(3)">다음 ➔</button>
             </div>
+        </div>
 
-            <div id="page2" class="page">
-                <h1>우리의 약속</h1>
-                <p>지금처럼 서로 아껴주면서, 우리 예쁜 세상이랑 셋이서 행복하게 살자. 아빠가 될 준비 됐지?</p>
-                <button onclick="nextPage(3)">다음 내용 보기 ➔</button>
-            </div>
-
-            <div id="page3" class="page">
-                <h1>마지막 선물</h1>
-                <p>우리, 세상이 잘 키워보자! 사랑해! ❤️</p>
-                <a href="https://youtu.be/L7cAqBQVjYI" target="_blank" class="btn-link">▶ 함께 들을 노래</a>
+        <!-- 3페이지: 사진 + 마무리 -->
+        <div id="page3" class="page">
+            <h1>우리의 기적</h1>
+            <img src="IMG_8799.jpeg" alt="우리 아기집" class="photo">
+            <p>우리, 세상이 잘 키워보자! 사랑해! ❤️</p>
+            <a href="https://youtu.be/L7cAqBQVjYI" target="_blank" class="btn-link">▶ 함께 들을 노래</a>
+            <div class="btn-group">
+                <button onclick="changePage(2)">⭠ 이전</button>
             </div>
         </div>
     </div>
 
     <script>
-        function nextPage(n) {
+        function changePage(n) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('page' + n).classList.add('active');
         }
