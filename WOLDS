@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아빠에게 보내는 편지</title>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f0f9ff; /* 차분한 하늘색 느낌 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+        h1 { color: #0369a1; text-align: center; margin-bottom: 20px; }
+        .letter {
+            font-size: 17px;
+            line-height: 1.8;
+            color: #334155;
+            margin-bottom: 30px;
+        }
+        .photo {
+            width: 100%;
+            border-radius: 20px;
+            display: block;
+            margin: 0 auto;
+        }
+        .footer {
+            text-align: center;
+            font-weight: bold;
+            color: #0369a1;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>To. 아빠가 될 당신에게</h1>
+        <div class="letter">
+            <p>여보(혹은 아빠), 우리에게 찾아온 이 작은 선물 덕분에 매일이 새롭고 설레요.</p>
+            <p>아직은 실감이 잘 나지 않지만, 곧 우리 품에 안길 아기를 생각하면 벌써부터 가슴이 벅차올라요.</p>
+            <p>앞으로 우리가 함께할 시간 동안, 힘들 때도 있겠지만 서로 의지하며 예쁜 추억 많이 만들어요.</p>
+            <p>지금처럼만 서로 아껴주면서, 우리 아기 세상에서 가장 행복한 아이로 같이 잘 키워봐요!</p>
+        </div>
+
+        <img src="IMG_8799.jpeg" alt="우리 아기" class="photo">
+        
+        <div class="footer">
+            <p>우리, 아기 잘 키워보자! 사랑해! ❤️</p>
+        </div>
+    </div>
+
+</body>
+</html>
