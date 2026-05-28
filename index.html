@@ -1,63 +1,381 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>민수야, 안녕</title>
-    <style>
-        body { font-family: 'Noto Sans KR', sans-serif; background-color: #fff0f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .card { background: white; padding: 50px; border-radius: 40px; box-shadow: 0 10px 30px rgba(255,182,193,0.5); width: 700px; text-align: center; }
-        .page { display: none; }
-        .page.active { display: block; animation: fadeIn 0.5s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        
-        h1 { color: #db2777; font-size: 2.5em; margin-bottom: 20px; }
-        p { font-size: 1.2em; line-height: 1.8; color: #444; }
-        .photo { width: 300px; border-radius: 20px; border: 5px solid #ffdde1; margin: 20px 0; }
-        
-        .btn-group { margin-top: 30px; }
-        button { background: #db2777; color: white; border: none; padding: 12px 25px; border-radius: 50px; font-weight: bold; cursor: pointer; margin: 0 10px; }
-        .btn-link { display: inline-block; background-color: #db2777; color: white; padding: 15px 30px; border-radius: 50px; text-decoration: none; font-weight: bold; margin-top: 20px; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>우리 아기에게 💌</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&family=Nanum+Pen+Script&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #fdf6e3;
+      --warm: #f5e6c8;
+      --brown: #7a5c3a;
+      --light-brown: #b89060;
+      --ink: #3a2a18;
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      background: #e8dcc8;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Nanum Myeongjo', serif;
+      overflow: hidden;
+    }
+
+    .scene {
+      width: 100vw; height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+
+    .envelope-wrap {
+      position: relative;
+      width: 340px;
+      animation: floatUp 1s ease forwards;
+    }
+    @keyframes floatUp {
+      from { opacity:0; transform: translateY(40px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+
+    .envelope {
+      width: 340px; height: 220px;
+      background: var(--warm);
+      border-radius: 4px;
+      position: relative;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      cursor: pointer;
+      overflow: visible;
+    }
+
+    .envelope::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 0; height: 0;
+      border-left: 170px solid transparent;
+      border-right: 170px solid transparent;
+      border-top: 110px solid #e8d4a8;
+      z-index: 3;
+    }
+    .envelope::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0;
+      width: 0; height: 0;
+      border-left: 170px solid transparent;
+      border-right: 170px solid transparent;
+      border-bottom: 100px solid #dcc890;
+      z-index: 1;
+    }
+    .env-left {
+      position: absolute; bottom: 0; left: 0;
+      width: 0; height: 0;
+      border-bottom: 220px solid #d4b878;
+      border-right: 170px solid transparent;
+      z-index: 1;
+    }
+    .env-right {
+      position: absolute; bottom: 0; right: 0;
+      width: 0; height: 0;
+      border-bottom: 220px solid #c8a85a;
+      border-left: 170px solid transparent;
+      z-index: 1;
+    }
+
+    .seal {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 52px; height: 52px;
+      background: radial-gradient(circle at 40% 35%, #e87070, #c03030);
+      border-radius: 50%;
+      z-index: 4;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .open-hint {
+      text-align: center;
+      margin-top: 18px;
+      font-family: 'Nanum Pen Script', cursive;
+      font-size: 18px;
+      color: var(--brown);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity:0.6; } 50% { opacity:1; }
+    }
+
+    .page {
+      display: none;
+      position: absolute;
+      width: 100vw; height: 100vh;
+      align-items: center; justify-content: center;
+      flex-direction: column;
+    }
+    .page.active { display: flex; }
+
+    .letter-paper {
+      position: relative;
+      width: min(520px, 92vw);
+      background: var(--cream);
+      border-radius: 2px;
+      padding: 48px 44px 40px;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.2), inset 0 0 0 1px rgba(0,0,0,0.04);
+      animation: slideIn 0.5s ease forwards;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    @keyframes slideIn {
+      from { opacity:0; transform: scale(0.92) translateY(20px); }
+      to   { opacity:1; transform: scale(1) translateY(0); }
+    }
+
+    .letter-paper::before {
+      content: '';
+      position: absolute; inset: 60px 0 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px, transparent 31px,
+        #e0d4b0 31px, #e0d4b0 32px
+      );
+      pointer-events: none;
+    }
+
+    .letter-paper::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 68px;
+      width: 1px;
+      background: rgba(200,80,80,0.35);
+      pointer-events: none;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 14px; right: 16px;
+      width: 32px; height: 32px;
+      border: none; background: none;
+      font-size: 22px; color: var(--light-brown);
+      cursor: pointer; line-height: 1;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, color 0.2s;
+      z-index: 10;
+    }
+    .close-btn:hover { background: rgba(0,0,0,0.06); color: var(--brown); }
+
+    .letter-date {
+      font-family: 'Nanum Pen Script', cursive;
+      font-size: 15px;
+      color: var(--light-brown);
+      margin-bottom: 20px;
+      position: relative; z-index: 1;
+    }
+    .letter-body {
+      font-family: 'Nanum Pen Script', cursive;
+      font-size: 21px;
+      line-height: 32px;
+      color: var(--ink);
+      position: relative; z-index: 1;
+      white-space: pre-line;
+    }
+    .letter-sign {
+      margin-top: 28px;
+      text-align: right;
+      font-family: 'Nanum Pen Script', cursive;
+      font-size: 19px;
+      color: var(--brown);
+      position: relative; z-index: 1;
+    }
+
+    .next-btn {
+      margin-top: 20px;
+      padding: 12px 36px;
+      background: var(--brown);
+      color: #fff;
+      border: none;
+      border-radius: 40px;
+      font-family: 'Nanum Myeongjo', serif;
+      font-size: 15px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+      transition: transform 0.2s, background 0.2s;
+    }
+    .next-btn:hover { background: #5c3d1e; transform: translateY(-2px); }
+
+    #page-photo {
+      background: radial-gradient(ellipse at center, #1a0a0a 0%, #000 100%);
+    }
+
+    .photo-frame {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 28px;
+      animation: fadeInPhoto 0.8s ease forwards;
+    }
+    @keyframes fadeInPhoto {
+      from { opacity:0; transform: scale(0.95); }
+      to   { opacity:1; transform: scale(1); }
+    }
+
+    .photo-frame img {
+      width: min(320px, 80vw);
+      border-radius: 6px;
+      box-shadow: 0 0 0 6px #fff, 0 0 40px rgba(255,200,150,0.3);
+    }
+    .photo-msg {
+      font-family: 'Nanum Pen Script', cursive;
+      font-size: 28px;
+      color: #fff;
+      text-align: center;
+      line-height: 1.5;
+      text-shadow: 0 2px 8px rgba(255,160,100,0.4);
+    }
+    .photo-sub {
+      font-size: 16px;
+      color: rgba(255,255,255,0.6);
+      font-family: 'Nanum Myeongjo', serif;
+    }
+
+    #page-youtube {
+      background: #0a0a0a;
+    }
+
+    .yt-wrap {
+      display: flex; flex-direction: column; align-items: center; gap: 32px;
+      animation: fadeInPhoto 0.8s ease forwards;
+    }
+
+    .yt-msg {
+      font-family: 'Nanum Pen Script', cursive;
+      font-size: 28px;
+      color: #fff;
+      text-align: center;
+      line-height: 1.6;
+      text-shadow: 0 2px 12px rgba(255,100,100,0.3);
+    }
+
+    .yt-btn {
+      display: flex; align-items: center; gap: 12px;
+      padding: 16px 40px;
+      background: #FF0000;
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      font-family: 'Nanum Myeongjo', serif;
+      font-size: 17px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 4px 24px rgba(255,0,0,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .yt-btn:hover { transform: scale(1.05); box-shadow: 0 6px 32px rgba(255,0,0,0.6); }
+    .yt-btn svg { width: 28px; height: 28px; fill: white; }
+
+    .hearts {
+      font-size: 32px;
+      letter-spacing: 8px;
+      animation: heartbeat 1.4s ease-in-out infinite;
+    }
+    @keyframes heartbeat {
+      0%,100% { transform: scale(1); }
+      50%      { transform: scale(1.15); }
+    }
+  </style>
 </head>
 <body>
 
-    <div class="card">
-        <!-- 1페이지: 민수야 -->
-        <div id="page1" class="page active">
-            <h1>민수야,</h1>
-            <button onclick="changePage(2)">다음 ➔</button>
-        </div>
-
-        <!-- 2페이지: 편지 -->
-        <div id="page2" class="page">
-            <h1>민수</h1></h1>
-            <p>민수야, 우리처음만날때 생각나? 너 완젼 백수같았는데</p> 
-            <p>만난지는 얼마 되지도 안됬는데 아기도 생기고 결혼할라하니까 기분이 싱숭맹숭하네</p> 
-            <p>나너 맨날 바보같이 놀려도 사랑하니까 우리 세상이 이쁘게 키워보자</p> 
-            <p>사랑해, 조민수</p>
-            <div class="btn-group">
-                <button onclick="changePage(1)">⭠ 이전</button>
-                <button onclick="changePage(3)">다음 ➔</button>
-            </div>
-        </div>
-
-        <!-- 3페이지: 사진 + 마무리 -->
-        <div id="page3" class="page">
-            <h1>우리의 기적</h1>
-            <img src="IMG_8799.jpeg" alt="우리 아기집" class="photo">
-            <p>우리, 세상이 잘 키워보자! 사랑해! ❤️</p>
-            <a href="https://youtu.be/L7cAqBQVjYI" target="_blank" class="btn-link">▶ 함께 들을 노래</a>
-            <div class="btn-group">
-                <button onclick="changePage(2)">⭠ 이전</button>
-            </div>
-        </div>
+<!-- PAGE 0: ENVELOPE -->
+<div class="scene" id="page-envelope">
+  <div style="display:flex;flex-direction:column;align-items:center;">
+    <div class="envelope-wrap">
+      <div class="envelope" id="openEnvelope">
+        <div class="env-left"></div>
+        <div class="env-right"></div>
+        <div class="seal">💌</div>
+      </div>
     </div>
+    <p class="open-hint">눌러서 열어봐 ✉️</p>
+  </div>
+</div>
 
-    <script>
-        function changePage(n) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById('page' + n).classList.add('active');
-        }
-    </script>
+<!-- PAGE 1: LETTER -->
+<div class="page" id="page-letter">
+  <div class="letter-paper">
+    <button class="close-btn" id="closeBtn" title="닫기">✕</button>
+    <p class="letter-date">2025년, 봄</p>
+    <p class="letter-body">아가야,
+
+아직 세상에 나오지도 않았는데
+벌써부터 네가 너무 보고싶어.
+
+작은 심장 소리를 처음 들었을 때
+나도 모르게 눈물이 나왔어.
+
+넌 정말 소중한 사람이야.
+엄마 아빠가 열심히 살아갈
+이유가 생겼어.
+
+건강하게만 태어나줘.
+그것만으로도 충분해.
+
+사랑해, 정말 많이.
+    </p>
+    <p class="letter-sign">엄마·아빠가 🌿</p>
+  </div>
+  <button class="next-btn" id="toPhoto">다음 →</button>
+</div>
+
+<!-- PAGE 2: BABY PHOTO -->
+<div class="page" id="page-photo">
+  <div class="photo-frame">
+    <div class="hearts">🤍 🤍 🤍</div>
+    <img src="IMG_8799.jpeg" alt="아기집 사진" />
+    <p class="photo-msg">우리 아기,<br>잘 키워보자 🌱</p>
+    <p class="photo-sub">— 엄마 아빠가 함께할게 —</p>
+    <button class="next-btn" id="toYoutube" style="background:#fff;color:#333;">다음 →</button>
+  </div>
+</div>
+
+<!-- PAGE 3: YOUTUBE -->
+<div class="page" id="page-youtube">
+  <div class="yt-wrap">
+    <div class="hearts">❤️ ❤️ ❤️</div>
+    <p class="yt-msg">아가야,<br>이 노래 들으면서<br>잘 커줘 🎵</p>
+    <a class="yt-btn" href="https://youtu.be/L7cAqBQVjYI?si=9DA1yyPyrR7JSTKc" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+      </svg>
+      유튜브로 보러가기
+    </a>
+    <p style="color:rgba(255,255,255,0.4);font-size:14px;font-family:'Nanum Myeongjo',serif;">
+      새 탭에서 열려요 🎬
+    </p>
+  </div>
+</div>
+
+<script>
+  function show(id) {
+    document.querySelectorAll('.page, .scene').forEach(el => el.classList.remove('active'));
+    const el = document.getElementById(id);
+    if (el) el.classList.add('active');
+  }
+
+  document.getElementById('openEnvelope').addEventListener('click', () => {
+    document.getElementById('page-envelope').style.display = 'none';
+    show('page-letter');
+  });
+
+  document.getElementById('closeBtn').addEventListener('click', () => {
+    document.getElementById('page-letter').classList.remove('active');
+    document.getElementById('page-envelope').style.display = 'flex';
+  });
+
+  document.getElementById('toPhoto').addEventListener('click', () => show('page-photo'));
+  document.getElementById('toYoutube').addEventListener('click', () => show('page-youtube'));
+</script>
 </body>
 </html>
